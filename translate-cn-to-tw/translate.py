@@ -19,24 +19,41 @@ class BEPUB:
             if i.get_type() == 9:
                 # ------------------------------------------------
                 soup = bs(i.content, "html.parser")
-                c_list = soup.contents
-                for c in c_list:
-                    if c.text and not c.text.isdigit():
+                h1_list = soup.findAll("h1")
+                for h1 in h1_list:
+                    if h1.text and not h1.text.isdigit():
                         try:
-                            c.string = self.cc.convert(c.text)
+                            h1.string = self.cc.convert(h1.text)
                         except Exception as e:
                             print(str(e), style="bold red")
                             continue
-                    # Process any remaining paragraphs in the last batch
-                # p_list = soup.findAll("p")
-                # for p in p_list:
-                #     if p.text and not p.text.isdigit():
-                #         try:
-                #             p.string = self.cc.convert(p.text)
-                #         except Exception as e:
-                #             print(str(e), style="bold red")
-                #             continue
-                #     # Process any remaining paragraphs in the last batch
+                # ------------------------------------------------
+                h2_list = soup.findAll("h2")
+                for h2 in h2_list:
+                    if h2.text and not h2.text.isdigit():
+                        try:
+                            h2.string = self.cc.convert(h2.text)
+                        except Exception as e:
+                            print(str(e), style="bold red")
+                            continue
+                # ------------------------------------------------
+                h3_list = soup.findAll("h3")
+                for h3 in h3_list:
+                    if h3.text and not h3.text.isdigit():
+                        try:
+                            h3.string = self.cc.convert(h3.text)
+                        except Exception as e:
+                            print(str(e), style="bold red")
+                            continue
+                # ------------------------------------------------
+                p_list = soup.findAll("p")
+                for p in p_list:
+                    if p.text and not p.text.isdigit():
+                        try:
+                            p.string = self.cc.convert(p.text)
+                        except Exception as e:
+                            print(str(e), style="bold red")
+                            continue
                 # ------------------------------------------------
                 print("------------------------------ done with ", i)
                 i.content = soup.prettify().encode()
@@ -49,7 +66,7 @@ class BEPUB:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "--book_name",
+        "--book-name",
         dest="book_name",
         type=str,
         help="your epub book name",
