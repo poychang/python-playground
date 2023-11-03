@@ -8,7 +8,7 @@ class BEPUB:
     def __init__(self, epub_name):
         self.epub_name = epub_name
         self.origin_book = epub.read_epub(self.epub_name)
-        self.cc = OpenCC('s2tw')
+        self.cc = OpenCC('s2twp.json')
 
     def translate_book(self):
         new_book = epub.EpubBook()
@@ -66,11 +66,11 @@ class BEPUB:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "--book-name",
-        dest="book_name",
+        "--file-path",
+        dest="file_path",
         type=str,
-        help="your epub book name",
+        help="your epub book full path",
     )
     options = parser.parse_args()
-    e = BEPUB(options.book_name)
+    e = BEPUB(options.file_path)
     e.translate_book()
